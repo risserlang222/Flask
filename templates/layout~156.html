@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"d></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="display-3">
+            {% block headline %}{% endblock %}
+        </h1>
+        <div>
+            {% block content %}{% endblock %}
+            <button class="m-1 btn">Button default</button>
+            <button class="m-1 btn btn-primary">Button primary</button>
+            <button class="m-1 btn btn-secondary">Buttion secondary</button>
+            <button class="m-1 btn btn-success">Button success></button>
+            <button class="m-1 btn btn-danger">Button danger></button>
+            <button class="m-1 btn btn-warning">Button warning></button>
+            <button class="m-1 btn btn-info">Button info></button>
+            <button class="m-1 btn btn-light">Button light></button>
+            <button class="m-1 btn btn-dark">Button dark></button>
+            <button class="m-1 btn btn-link">Button link></button>
+        </div>
+        <div class="btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-primary active">
+                <input type="checkbox" checked> Checkbox
+            </label>
+        </div>
+        <div class="m-1 btn-group" data-toggle="buttuons">
+            <label class="btn btn-primary active">
+                <input type="radio" name="options" id="r1" checked>Radio 1
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="r2">Radio2
+            </label>
+            <label class="btn btn-primary">
+                <input type="radio" name="options" id="r3">Radio3
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="sel1">Select 1</label>
+            <select class="form-control" id="sell">
+                <option>Windows</option>
+                <option>Mac</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sel2">Select 2</label>
+            <select class="form-control" id="sell" size="5">
+                <option>Windows</option>
+                <option>Linux</option>
+            </select>
+        </div>
+        <div class="text-right">
+            {% block footer %}{% endblock %}
+        </div>
+
+        <div class="row">
+            <p class="p-1 col">one contents.</p>
+        </div>
+        <div class="row">
+            <p class="p-1 col">two contents.</p>
+            <p class="p-1 col">two contents.</p>
+        </div>
+        <div class="row">
+            <p class="p-1 col">three contents.</p>
+            <p class="p-1 col">three contents.</p>
+            <p class="p-1 col">three contents.</p>
+        </div>
+        <div class="row">
+            <p class="p-1 col-6">two contents.</p>
+            <p class="p-1 col-6">two contents.</p>
+        </div>
+        <div class="row">
+            <p class="p-1 col-8">two contents.</p>
+            <p class="p-1 col-4">two contents.</p>
+        </div>
+        <div class="row">
+            <p class="p-1 col-10">two contents.</p>
+            <p class="p-1 col-2">two contents.</p>
+        </div>
+
+        <div class="row">
+            <p class="p-1 bg-light col-lg-10 col-md-8 col-sm-12">A contents.</p>
+            <p class="p-1 bg-light col-lg-2 col-md-4 col-sm-12">B contents.</p>
+        </div>
+        <hr>
+        <div class="row">
+            <p class="p-1 bg-light col-lg-8 col-md-6 col-sm-12 col-12">A contents.</p>
+            <p class="p-1 bg-light col-lg-2 col-md-3 col-sm-6 col-12">B contents.</p>
+            <p class="p-1 bg-light col-lg-2 col-md-3 col-sm-6 col-12">C contents.</p>
+        </div>
+
+        {% if flg == None %}
+        <div class="alert alert-light" role="alert">
+        {% elif flg %}
+        <div class="alert alert-primary" role="alert">
+        {% else %}
+        <div class="alert alert-danger" role="alert">
+        {% endif %}
+        {{ alert }}
+            <button type="button" class="close"
+                    data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form method="post" action="/">
+            <div class="form-group">
+                <label for="sel1">select your platform:</label>
+                <select class="form-control" id="sel1"
+                        name="platform">
+                    <option>Windows</option>
+                    <option>mac</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit">
+            </div>
+        </form>
+
+
+
+
+
+
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>
