@@ -15,3 +15,5 @@ def index():
 if __name__ == '__main__':
     app.debug = False
     app.run(host='localhost')
+
+### 追加してみたよ
