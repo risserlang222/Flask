@@ -21,29 +21,32 @@
             <div class="mb-3" id="msg">{{ message }}</div>
 
             <!-- Vue.js container -->
+
             <div id="app" class="m-3">
-                {% raw %}
                 <mycomp />
-                {% endraw %}
             </div>
 
             <!-- mycomp's template -->
             {% raw %}
             <script type="text/x-template" id="mycomp-template">
                 <div>
-                    <div class="alert alert-info">
-                        <h5>{{title}}</h5>
-                        <p>{{data}}</p>
+                    <div v-if="flg == false"
+                        class="'h5 alert alert-light">
+                        please input your messages:
                     </div>
-                    <div>
-                        <select class="form-control" v-model="num"
-                            v-on:change="action">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
+                    <div v-else class="'h5 alert alert-primary">
+                        {{alert}}
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="msg">Message</label>
+                        <div class="row">
+                            <input type="text" class="form-control col" 
+                            id="msg" v-model="msg">
+                            <button v-on:click="action" class="col-2">
+                                Click</button>
+                            </div>
+                        </div>
+                    </div>
             </script>
             {% endraw %}
             <!-- Vue.js script -->
@@ -51,25 +54,26 @@
             // mycomp object
             Vue.component('mycomp', {
                 template: '#mycomp-template',
-                data: function() {
+                data: function(){
                     return {
-                        title:'Ajax data',
-                        data: 'wait...',
-                        num:0,
-                    }
+                        flg:false,
+                        msg:'',
+                        alert:'please type message:'
+                    };
                 },
                 methods:{
-                    action: function(e) {
-                        let self = this;
-                        $.get("/ajax/" + this.num, function(data){
-                            self.data = data.id + ':' + data.name
-                            + ' [' + data.mail + ']';
-                        });
+                    action:function(e) {
+                        if (this.msg == ''){
+                            this.alert = 'please type message:';
+                            this.flg = false;
+                        } else {
+                            this.alert = 'your typed;' + this.msg;
+                            this.flg = true;
+                        }
                     }
                 }
-
             });
-            
+
             // start Vue.
             new Vue({
                 el:'#app',

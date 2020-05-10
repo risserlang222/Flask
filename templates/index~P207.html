@@ -1,3 +1,6 @@
+
+
+
 {% extends "layout.html" %}
 
 <!doctype html>
@@ -21,27 +24,26 @@
             <div class="mb-3" id="msg">{{ message }}</div>
 
             <!-- Vue.js container -->
+
             <div id="app" class="m-3">
-                {% raw %}
                 <mycomp />
-                {% endraw %}
             </div>
 
             <!-- mycomp's template -->
             {% raw %}
             <script type="text/x-template" id="mycomp-template">
                 <div>
-                    <div class="alert alert-info">
-                        <h5>{{title}}</h5>
-                        <p>{{data}}</p>
+                    <div v-if="msg == ''"
+                        class="'h5 alert alert-light">
+                        please input your message:
                     </div>
-                    <div>
-                        <select class="form-control" v-model="num"
-                            v-on:change="action">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
+                    <div v-else class="'h5 alert alert-primary">
+                        you said: "{{msg}}"
+                    </div>
+                    <div class="form-group">
+                        <label for="msg">Message</label>
+                        <input type="text" class="form-control"
+                            id="msg" v-model="msg">
                     </div>
                 </div>
             </script>
@@ -51,25 +53,13 @@
             // mycomp object
             Vue.component('mycomp', {
                 template: '#mycomp-template',
-                data: function() {
+                data: function(){
                     return {
-                        title:'Ajax data',
-                        data: 'wait...',
-                        num:0,
-                    }
-                },
-                methods:{
-                    action: function(e) {
-                        let self = this;
-                        $.get("/ajax/" + this.num, function(data){
-                            self.data = data.id + ':' + data.name
-                            + ' [' + data.mail + ']';
-                        });
-                    }
+                        msg:''
+                    };
                 }
-
             });
-            
+
             // start Vue.
             new Vue({
                 el:'#app',

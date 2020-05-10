@@ -23,25 +23,27 @@
             <!-- Vue.js container -->
             <div id="app" class="m-3">
                 {% raw %}
-                <mycomp />
+                <mycomp>
+                    <h5 slot="header">Hello!</h5>
+                    <div slot="content">
+                        <p>これは、スロットのサンプルです。</p>
+                        <small>This is slot sample.</small>
+                    </div>
+                </mycomp>
                 {% endraw %}
             </div>
 
             <!-- mycomp's template -->
             {% raw %}
-            <script type="text/x-template" id="mycomp-template">
+            <script type="text/template" id="mycomp-template">
                 <div>
-                    <div class="alert alert-info">
-                        <h5>{{title}}</h5>
-                        <p>{{data}}</p>
-                    </div>
-                    <div>
-                        <select class="form-control" v-model="num"
-                            v-on:change="action">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
+                    <div class="card">
+                        <div class="card-header">
+                            <slot name="header" />
+                        </div>
+                        <div class="card-body">
+                            <slot name="content" />
+                        </div>
                     </div>
                 </div>
             </script>
@@ -51,22 +53,6 @@
             // mycomp object
             Vue.component('mycomp', {
                 template: '#mycomp-template',
-                data: function() {
-                    return {
-                        title:'Ajax data',
-                        data: 'wait...',
-                        num:0,
-                    }
-                },
-                methods:{
-                    action: function(e) {
-                        let self = this;
-                        $.get("/ajax/" + this.num, function(data){
-                            self.data = data.id + ':' + data.name
-                            + ' [' + data.mail + ']';
-                        });
-                    }
-                }
 
             });
             

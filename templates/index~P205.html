@@ -21,28 +21,16 @@
             <div class="mb-3" id="msg">{{ message }}</div>
 
             <!-- Vue.js container -->
-            <div id="app" class="m-3">
-                {% raw %}
-                <mycomp />
-                {% endraw %}
+
+            <div id="app" class="m-5">
+                <mycomp kind="2"/>
             </div>
 
             <!-- mycomp's template -->
             {% raw %}
             <script type="text/x-template" id="mycomp-template">
-                <div>
-                    <div class="alert alert-info">
-                        <h5>{{title}}</h5>
-                        <p>{{data}}</p>
-                    </div>
-                    <div>
-                        <select class="form-control" v-model="num"
-                            v-on:change="action">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
+                <div v-bind:class="'h5 alert alert-' + data[kind]">
+                    This is {{data[kind]}} alert!!
                 </div>
             </script>
             {% endraw %}
@@ -51,25 +39,16 @@
             // mycomp object
             Vue.component('mycomp', {
                 template: '#mycomp-template',
-                data: function() {
+                props: ['kind'] ,
+                data: function(){
                     return {
-                        title:'Ajax data',
-                        data: 'wait...',
-                        num:0,
-                    }
-                },
-                methods:{
-                    action: function(e) {
-                        let self = this;
-                        $.get("/ajax/" + this.num, function(data){
-                            self.data = data.id + ':' + data.name
-                            + ' [' + data.mail + ']';
-                        });
+                        kind:this.kind,
+                        data:['primary', 'secondary',
+                    'danger', 'warning', 'info']
                     }
                 }
-
             });
-            
+
             // start Vue.
             new Vue({
                 el:'#app',

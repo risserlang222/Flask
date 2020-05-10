@@ -21,28 +21,23 @@
             <div class="mb-3" id="msg">{{ message }}</div>
 
             <!-- Vue.js container -->
+
             <div id="app" class="m-3">
-                {% raw %}
                 <mycomp />
-                {% endraw %}
             </div>
 
             <!-- mycomp's template -->
             {% raw %}
             <script type="text/x-template" id="mycomp-template">
                 <div>
-                    <div class="alert alert-info">
-                        <h5>{{title}}</h5>
-                        <p>{{data}}</p>
+                    <div class="form-group">
+                        <label for="item">Number</label>
+                        <input type="text" class="form-control"
+                            id="item" name="item" v-model="items">
                     </div>
-                    <div>
-                        <select class="form-control" v-model="num"
-                            v-on:change="action">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
+                    <ol class="list-group" v-for="item in itemlist">
+                        <li class="list-group-item">{{item}}</li>
+                    </ol>
                 </div>
             </script>
             {% endraw %}
@@ -51,20 +46,19 @@
             // mycomp object
             Vue.component('mycomp', {
                 template: '#mycomp-template',
-                data: function() {
+                data: function(){
                     return {
-                        title:'Ajax data',
-                        data: 'wait...',
-                        num:0,
-                    }
+                        itemlist:[]
+                    };
                 },
-                methods:{
-                    action: function(e) {
-                        let self = this;
-                        $.get("/ajax/" + this.num, function(data){
-                            self.data = data.id + ':' + data.name
-                            + ' [' + data.mail + ']';
-                        });
+                computed:{
+                    items: {
+                        set:function(val) {
+                            this.itemlist = val.split(',');
+                        },
+                        get:function() {
+                            return this.itemlist.join(',')
+                        }
                     }
                 }
 

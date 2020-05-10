@@ -21,29 +21,21 @@
             <div class="mb-3" id="msg">{{ message }}</div>
 
             <!-- Vue.js container -->
-            <div id="app" class="m-3">
-                {% raw %}
+
+            <div id="app" class="m-5">
                 <mycomp />
-                {% endraw %}
             </div>
 
             <!-- mycomp's template -->
             {% raw %}
-            <script type="text/x-template" id="mycomp-template">
-                <div>
-                    <div class="alert alert-info">
-                        <h5>{{title}}</h5>
-                        <p>{{data}}</p>
-                    </div>
-                    <div>
-                        <select class="form-control" v-model="num"
-                            v-on:change="action">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                    </div>
-                </div>
+            <script type="text/text-template" id="mycomp-template">
+                <ul class="list-group">
+                    <template v-for="item in data">
+                        <li class="list-group-item">
+                            {{item.name}} [ {{item.mail}}, {{item.age}}] ]
+                        </li>
+                    </template>
+                </ul>
             </script>
             {% endraw %}
             <!-- Vue.js script -->
@@ -51,25 +43,19 @@
             // mycomp object
             Vue.component('mycomp', {
                 template: '#mycomp-template',
-                data: function() {
+                props: ['name', 'msg', 'f'],
+                data: function(){
                     return {
-                        title:'Ajax data',
-                        data: 'wait...',
-                        num:0,
-                    }
-                },
-                methods:{
-                    action: function(e) {
-                        let self = this;
-                        $.get("/ajax/" + this.num, function(data){
-                            self.data = data.id + ':' + data.name
-                            + ' [' + data.mail + ']';
-                        });
+                        data:[
+                            {name:'Taro', mail:'taro@yamada', age:39},
+                            {name:'Hanako', mail:'hanako@flower', age:28},
+                            {name:'Sachiko', mail:'sachiko@happy', age:17}
+                        ]
                     }
                 }
-
             });
             
+
             // start Vue.
             new Vue({
                 el:'#app',
